@@ -12,574 +12,87 @@
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet.photon.css">
         <style>
+        html, body {
+            background-color: #ffffff;
+        }
         #map {
             width: 100%;
             height: 100vh;
         }
-        .filter-panel {
+        .map-panel {
             position: absolute;
-            top: 14px;
-            right: 14px;
             z-index: 1000;
-            width: min(360px, calc(100% - 28px));
-            padding: 14px;
+            width: min(336px, calc(100% - 28px));
+            padding: 12px;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+            border: 1px solid #d7e1ef;
+            box-shadow: 0 8px 24px rgba(25, 40, 68, 0.16);
             font-family: Arial, Helvetica, sans-serif;
-        }
-        .filter-panel h1 {
-            margin: 0 0 10px;
-            font-size: 17px;
-            line-height: 1.2;
-        }
-        .filter-panel label {
-            display: block;
-            margin-top: 9px;
-            margin-bottom: 4px;
-            color: #444;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .filter-panel select,
-        .filter-panel button {
-            width: 100%;
-            min-height: 34px;
-            border-radius: 6px;
-            border: 1px solid #b8b8b8;
-            background: #fff;
-            color: #222;
-            font-size: 13px;
-        }
-        .filter-panel button {
-            margin-top: 10px;
-            background: #0b63b6;
-            color: #fff;
-            border-color: #0b63b6;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .filter-count {
-            margin-top: 10px;
-            color: #555;
-            font-size: 12px;
-        }
-        .osc-popup {
-            min-width: 250px;
-            max-width: 330px;
-            color: #192844;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .osc-popup-title {
-            margin: 0 0 6px;
-            color: #052b76;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-        .osc-popup-subtitle {
-            margin: 0 0 10px;
-            color: #50617f;
-            font-size: 12px;
-            line-height: 1.35;
-        }
-        .osc-popup-badge {
-            display: inline-block;
-            margin-bottom: 9px;
-            padding: 4px 10px;
-            border: 1px solid #c8dcff;
-            border-radius: 999px;
-            background: #eef5ff;
-            color: #17438b;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        .osc-popup-row {
-            display: grid;
-            grid-template-columns: 88px minmax(0, 1fr);
-            gap: 8px;
-            padding: 6px 0;
-            border-top: 1px solid #e8edf6;
-            font-size: 12px;
-            line-height: 1.3;
-        }
-        .osc-popup-row strong {
-            color: #25314d;
-            font-weight: 700;
-        }
-        .osc-popup-row span {
             color: #192844;
         }
-        @media (max-width: 700px) {
-            .filter-panel {
-                top: auto;
-                right: 10px;
-                bottom: 22px;
-                left: 10px;
-                width: auto;
-            }
-        }
-        .filter-panel {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 1000;
-            width: min(360px, calc(100% - 28px));
-            padding: 14px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .filter-panel h1 {
-            margin: 0 0 10px;
-            font-size: 17px;
-            line-height: 1.2;
-        }
-        .filter-panel label {
-            display: block;
-            margin-top: 9px;
-            margin-bottom: 4px;
-            color: #444;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .filter-panel select,
-        .filter-panel button {
-            width: 100%;
-            min-height: 34px;
-            border-radius: 6px;
-            border: 1px solid #b8b8b8;
-            background: #fff;
-            color: #222;
-            font-size: 13px;
-        }
-        .filter-panel button {
-            margin-top: 10px;
-            background: #0b63b6;
-            color: #fff;
-            border-color: #0b63b6;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .filter-count {
-            margin-top: 10px;
-            color: #555;
-            font-size: 12px;
-        }
-        .osc-popup {
-            min-width: 250px;
-            max-width: 330px;
-            color: #192844;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .osc-popup-title {
-            margin: 0 0 6px;
-            color: #052b76;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-        .osc-popup-subtitle {
-            margin: 0 0 10px;
-            color: #50617f;
-            font-size: 12px;
-            line-height: 1.35;
-        }
-        .osc-popup-badge {
-            display: inline-block;
-            margin-bottom: 9px;
-            padding: 4px 10px;
-            border: 1px solid #c8dcff;
-            border-radius: 999px;
-            background: #eef5ff;
-            color: #17438b;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        .osc-popup-row {
-            display: grid;
-            grid-template-columns: 88px minmax(0, 1fr);
-            gap: 8px;
-            padding: 6px 0;
-            border-top: 1px solid #e8edf6;
-            font-size: 12px;
-            line-height: 1.3;
-        }
-        .osc-popup-row strong {
-            color: #25314d;
-            font-weight: 700;
-        }
-        .osc-popup-row span {
-            color: #192844;
-        }
-        @media (max-width: 700px) {
-            .filter-panel {
-                top: auto;
-                right: 10px;
-                bottom: 22px;
-                left: 10px;
-                width: auto;
-            }
-        }
-        .filter-panel {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 1000;
-            width: min(360px, calc(100% - 28px));
-            padding: 14px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .filter-panel h1 {
-            margin: 0 0 10px;
-            font-size: 17px;
-            line-height: 1.2;
-        }
-        .filter-panel label {
-            display: block;
-            margin-top: 9px;
-            margin-bottom: 4px;
-            color: #444;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .filter-panel select,
-        .filter-panel button {
-            width: 100%;
-            min-height: 34px;
-            border-radius: 6px;
-            border: 1px solid #b8b8b8;
-            background: #fff;
-            color: #222;
-            font-size: 13px;
-        }
-        .filter-panel button {
-            margin-top: 10px;
-            background: #0b63b6;
-            color: #fff;
-            border-color: #0b63b6;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .filter-count {
-            margin-top: 10px;
-            color: #555;
-            font-size: 12px;
-        }
-        .osc-popup {
-            min-width: 250px;
-            max-width: 330px;
-            color: #192844;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .osc-popup-title {
-            margin: 0 0 6px;
-            color: #052b76;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-        .osc-popup-subtitle {
-            margin: 0 0 10px;
-            color: #50617f;
-            font-size: 12px;
-            line-height: 1.35;
-        }
-        .osc-popup-badge {
-            display: inline-block;
-            margin-bottom: 9px;
-            padding: 4px 10px;
-            border: 1px solid #c8dcff;
-            border-radius: 999px;
-            background: #eef5ff;
-            color: #17438b;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        .osc-popup-row {
-            display: grid;
-            grid-template-columns: 88px minmax(0, 1fr);
-            gap: 8px;
-            padding: 6px 0;
-            border-top: 1px solid #e8edf6;
-            font-size: 12px;
-            line-height: 1.3;
-        }
-        .osc-popup-row strong {
-            color: #25314d;
-            font-weight: 700;
-        }
-        .osc-popup-row span {
-            color: #192844;
-        }
-        @media (max-width: 700px) {
-            .filter-panel {
-                top: auto;
-                right: 10px;
-                bottom: 22px;
-                left: 10px;
-                width: auto;
-            }
-        }
-        .filter-panel {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 1000;
-            width: min(360px, calc(100% - 28px));
-            padding: 14px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .filter-panel h1 {
-            margin: 0 0 10px;
-            font-size: 17px;
-            line-height: 1.2;
-        }
-        .filter-panel label {
-            display: block;
-            margin-top: 9px;
-            margin-bottom: 4px;
-            color: #444;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .filter-panel select,
-        .filter-panel button {
-            width: 100%;
-            min-height: 34px;
-            border-radius: 6px;
-            border: 1px solid #b8b8b8;
-            background: #fff;
-            color: #222;
-            font-size: 13px;
-        }
-        .filter-panel button {
-            margin-top: 10px;
-            background: #0b63b6;
-            color: #fff;
-            border-color: #0b63b6;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .filter-count {
-            margin-top: 10px;
-            color: #555;
-            font-size: 12px;
-        }
-        @media (max-width: 700px) {
-            .filter-panel {
-                top: auto;
-                right: 10px;
-                bottom: 22px;
-                left: 10px;
-                width: auto;
-            }
-        }
-        .filter-panel {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 1000;
-            width: min(360px, calc(100% - 28px));
-            padding: 14px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .filter-panel h1 {
-            margin: 0 0 10px;
-            font-size: 17px;
-            line-height: 1.2;
-        }
-        .filter-panel label {
-            display: block;
-            margin-top: 9px;
-            margin-bottom: 4px;
-            color: #444;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .filter-panel select,
-        .filter-panel button {
-            width: 100%;
-            min-height: 34px;
-            border-radius: 6px;
-            border: 1px solid #b8b8b8;
-            background: #fff;
-            color: #222;
-            font-size: 13px;
-        }
-        .filter-panel button {
-            margin-top: 10px;
-            background: #0b63b6;
-            color: #fff;
-            border-color: #0b63b6;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .filter-count {
-            margin-top: 10px;
-            color: #555;
-            font-size: 12px;
-        }
-        @media (max-width: 700px) {
-            .filter-panel {
-                top: auto;
-                right: 10px;
-                bottom: 22px;
-                left: 10px;
-                width: auto;
-            }
-        }
-        .filter-panel {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 1000;
-            width: min(360px, calc(100% - 28px));
-            padding: 14px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .filter-panel h1 {
-            margin: 0 0 10px;
-            font-size: 17px;
-            line-height: 1.2;
-        }
-        .filter-panel label {
-            display: block;
-            margin-top: 9px;
-            margin-bottom: 4px;
-            color: #444;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .filter-panel select,
-        .filter-panel button {
-            width: 100%;
-            min-height: 34px;
-            border-radius: 6px;
-            border: 1px solid #b8b8b8;
-            background: #fff;
-            color: #222;
-            font-size: 13px;
-        }
-        .filter-panel button {
-            margin-top: 10px;
-            background: #0b63b6;
-            color: #fff;
-            border-color: #0b63b6;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .filter-count {
-            margin-top: 10px;
-            color: #555;
-            font-size: 12px;
-        }
-        @media (max-width: 700px) {
-            .filter-panel {
-                top: auto;
-                right: 10px;
-                bottom: 22px;
-                left: 10px;
-                width: auto;
-            }
-        }
-        .filter-panel {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 1000;
-            width: min(360px, calc(100% - 28px));
-            padding: 14px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .filter-panel h1 {
-            margin: 0 0 10px;
-            font-size: 17px;
-            line-height: 1.2;
-        }
-        .filter-panel label {
-            display: block;
-            margin-top: 9px;
-            margin-bottom: 4px;
-            color: #444;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .filter-panel select,
-        .filter-panel button {
-            width: 100%;
-            min-height: 34px;
-            border-radius: 6px;
-            border: 1px solid #b8b8b8;
-            background: #fff;
-            color: #222;
-            font-size: 13px;
-        }
-        .filter-panel button {
-            margin-top: 10px;
-            background: #0b63b6;
-            color: #fff;
-            border-color: #0b63b6;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .filter-count {
-            margin-top: 10px;
-            color: #555;
-            font-size: 12px;
-        }
-        @media (max-width: 700px) {
-            .filter-panel {
-                top: auto;
-                right: 10px;
-                bottom: 22px;
-                left: 10px;
-                width: auto;
-            }
-        }
+        .filter-panel { top: 8px; right: 8px; max-height: 55vh; overflow: auto; }
+        .summary-panel { right: 8px; bottom: 8px; max-height: 36vh; overflow: auto; }
+        .map-panel h2 { margin: 0 0 8px; color: #052b76; font-size: 15px; font-weight: 800; line-height: 1.2; }
+        .filter-panel h2, .summary-panel h2 { padding-bottom: 8px; border-bottom: 1px solid #dfe7f2; }
+        .filter-section { margin-top: 7px; border-top: 1px solid #e3e9f4; }
+        .filter-section summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 30px; cursor: pointer; list-style: none; }
+        .filter-section summary::-webkit-details-marker { display: none; }
+        .filter-section summary::after { content: "▾"; color: #7b8798; font-size: 12px; }
+        .filter-section[open] summary::after { content: "▴"; }
+        .filter-section-title { color: #25314d; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+        .selected-count { color: #52627b; font-size: 11px; font-weight: 700; text-transform: none; white-space: nowrap; }
+        .checkbox-list { display: grid; gap: 4px; max-height: 92px; overflow: auto; padding: 5px 4px 1px 0; }
+        .checkbox-row { display: grid; grid-template-columns: 15px minmax(0, 1fr); gap: 7px; align-items: start; color: #192844; font-size: 11px; line-height: 1.22; }
+        .checkbox-row input { width: 13px; height: 13px; margin: 1px 0 0; accent-color: #0b63b6; }
+        .panel-button { width: 100%; min-height: 32px; margin-top: 8px; border-radius: 6px; border: 1px solid #0b63b6; background: #0b63b6; color: #fff; cursor: pointer; font-size: 12px; font-weight: 800; }
+        .panel-button.secondary { border-color: #edf0f5; background: #f2f4f8; color: #333; }
+        .filter-badge { display: inline-block; margin-top: 10px; padding: 4px 10px; border: 1px solid #c8dcff; border-radius: 999px; background: #eef5ff; color: #17438b; font-size: 11px; font-weight: 700; }
+        .filter-count { margin-top: 8px; color: #50617f; font-size: 12px; }
+        .metric-card { margin-top: 8px; padding: 9px; border: 1px solid #d9e3f1; border-radius: 7px; background: #f8fbff; }
+        .metric-label { display: block; color: #52627b; font-size: 11px; line-height: 1.25; }
+        .metric-value { display: block; margin-top: 3px; color: #052b76; font-size: 16px; font-weight: 800; line-height: 1.15; }
+        .type-summary table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .type-summary th, .type-summary td { padding: 4px 0; border-top: 1px solid #e8edf6; text-align: left; vertical-align: middle; }
+        .type-summary th { color: #25314d; font-weight: 800; }
+        .type-summary td { color: #192844; }
+        .type-summary th:last-child, .type-summary td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; color: #052b76; }
+        .bar-cell { width: 35%; padding-left: 8px !important; padding-right: 8px !important; }
+        .summary-bar-track { height: 8px; border-radius: 999px; background: #e8eef7; overflow: hidden; }
+        .summary-bar { height: 100%; border-radius: 999px; background: #0d2366; }
+        .osc-popup { min-width: 250px; max-width: 330px; color: #192844; font-family: Arial, Helvetica, sans-serif; }
+        .osc-popup-title { margin: 0 0 6px; color: #052b76; font-size: 16px; font-weight: 700; line-height: 1.2; }
+        .osc-popup-subtitle { margin: 0 0 10px; color: #50617f; font-size: 12px; line-height: 1.35; }
+        .osc-popup-badge { display: inline-block; margin-bottom: 9px; padding: 4px 10px; border: 1px solid #c8dcff; border-radius: 999px; background: #eef5ff; color: #17438b; font-size: 11px; font-weight: 700; }
+        .osc-popup-row { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 8px; padding: 6px 0; border-top: 1px solid #e8edf6; font-size: 12px; line-height: 1.3; }
+        .osc-popup-row strong { color: #25314d; font-weight: 700; }
+        .osc-popup-row span { color: #192844; }
+        @media (max-width: 900px) { .filter-panel, .summary-panel { left: auto; right: 10px; width: min(330px, calc(100% - 20px)); } .filter-panel { top: 10px; max-height: 54vh; } .summary-panel { bottom: 10px; max-height: 34vh; } }
         </style>
         <title>Mapa OSC</title>
     </head>
     <body>
-        <div class="filter-panel" id="filterPanel">
-            <h1>Mapa OSC</h1>
-            <label for="filterTipo">Tipo de institución</label>
-            <select id="filterTipo">
-                <option value="">Todas</option>
-            </select>
-            <label for="filterComuna">Comuna</label>
-            <select id="filterComuna">
-                <option value="">Todas</option>
-            </select>
-            <label for="filterPrograma">Programa / Apoyo recibido</label>
-            <select id="filterPrograma">
-                <option value="">Todos</option>
-            </select>
-            <button type="button" id="resetFilters">Limpiar filtros</button>
+        <div class="map-panel filter-panel" id="filterPanel">
+            <h2>Consulta de datos</h2>
+            <details class="filter-section" open>
+                <summary><span class="filter-section-title">Tipo de instituci&oacute;n</span><span class="selected-count" id="filterTipoCount">Todas</span></summary>
+                <div class="checkbox-list" id="filterTipo"></div>
+            </details>
+            <details class="filter-section" open>
+                <summary><span class="filter-section-title">Comuna</span><span class="selected-count" id="filterComunaCount">Todas</span></summary>
+                <div class="checkbox-list" id="filterComuna"></div>
+            </details>
+            <details class="filter-section" open>
+                <summary><span class="filter-section-title">Programa / Apoyo recibido</span><span class="selected-count" id="filterProgramaCount">Todos</span></summary>
+                <div class="checkbox-list" id="filterPrograma"></div>
+            </details>
+            <button type="button" class="panel-button" id="applyFiltersButton">Aplicar filtros</button>
+            <button type="button" class="panel-button secondary" id="resetFilters">Limpiar filtros</button>
+            <span class="filter-badge" id="filterBadge">Sin filtros activos</span>
             <div class="filter-count" id="filterCount"></div>
+        </div>
+        <div class="map-panel summary-panel" id="summaryPanel">
+            <div class="type-summary"><h2>Total por tipo de instituci&oacute;n</h2><table><thead><tr><th>Tipo</th><th class="bar-cell"></th><th>Total</th></tr></thead><tbody id="typeSummaryBody"></tbody></table></div>
         </div>
         <div id="map">
         </div>
@@ -598,7 +111,7 @@
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-34.682916970279706,-58.54637271853147],[-34.53515047027972,-58.32391106468533]]);
+        }).fitBounds([[-34.70926694055942,-58.547221527097896],[-34.56150044055943,-58.32475987325176]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -703,9 +216,7 @@
                     <div class="osc-popup-row"><strong>Programa</strong><span>' + (props['programa'] ? autolinker.link(String(props['programa']).replace(/'/g, '\'').toLocaleString()) : 'Sin dato') + '</span></div>\
                 </div>';
             var content = popupContent;
-            layer.on('popupopen', function(e) {
-                addClassToPopupIfMedia(content, e.popup);
-            });
+            layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
             layer.bindPopup(content, { maxHeight: 400 });
         }
 
@@ -721,7 +232,7 @@
                 weight: 1,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(11,99,182,1.0)',
+                fillColor: 'rgba(38,101,143,1.0)',
                 interactive: true,
             }
         }
@@ -746,67 +257,56 @@
         bounds_group.addLayer(layer_osc_direcciones_geocodificadas_qgis_1);
         map.addLayer(layer_osc_direcciones_geocodificadas_qgis_1);
         var allOscFeatures = json_osc_direcciones_geocodificadas_qgis_1.features.slice();
-        function sortValues(values) {
-            return Array.from(values).filter(Boolean).sort(function(a, b) {
-                return String(a).localeCompare(String(b), 'es', {numeric: true});
-            });
-        }
-        function fillSelect(id, values) {
-            var select = document.getElementById(id);
-            var first = select.options[0].outerHTML;
-            select.innerHTML = first;
+        function sortValues(values) { return Array.from(values).filter(Boolean).sort(function(a, b) { return String(a).localeCompare(String(b), 'es', {numeric: true}); }); }
+        function renderCheckboxes(id, values, labelFormatter) {
+            var container = document.getElementById(id); container.innerHTML = '';
             values.forEach(function(value) {
-                var option = document.createElement('option');
-                option.value = value;
-                option.textContent = id === 'filterComuna' ? 'Comuna ' + value : value;
-                select.appendChild(option);
+                var label = document.createElement('label'); label.className = 'checkbox-row';
+                var input = document.createElement('input'); input.type = 'checkbox'; input.value = value;
+                var span = document.createElement('span'); span.textContent = labelFormatter ? labelFormatter(value) : value;
+                label.appendChild(input); label.appendChild(span); container.appendChild(label);
             });
         }
+        function selectedValues(id) { return Array.from(document.querySelectorAll('#' + id + ' input:checked')).map(function(input) { return input.value; }); }
         function featureMatches(feature) {
-            var props = feature.properties || {};
-            var tipo = document.getElementById('filterTipo').value;
-            var comuna = document.getElementById('filterComuna').value;
-            var programa = document.getElementById('filterPrograma').value;
-            var programas = Array.isArray(props.programas) ? props.programas : [];
-            var comunas = Array.isArray(props.comunas) ? props.comunas : [];
-            return (!tipo || props.tipo === tipo)
-                && (!comuna || comunas.indexOf(comuna) !== -1 || props.comuna === comuna)
-                && (!programa || programas.indexOf(programa) !== -1 || props.programa === programa);
+            var props = feature.properties || {}; var tipos = selectedValues('filterTipo'); var comunasFiltro = selectedValues('filterComuna'); var programasFiltro = selectedValues('filterPrograma');
+            var programas = Array.isArray(props.programas) ? props.programas : []; var comunas = Array.isArray(props.comunas) ? props.comunas : [];
+            return (!tipos.length || tipos.indexOf(props.tipo) !== -1)
+                && (!comunasFiltro.length || comunasFiltro.some(function(comuna) { return comunas.indexOf(comuna) !== -1 || props.comuna === comuna; }))
+                && (!programasFiltro.length || programasFiltro.some(function(programa) { return programas.indexOf(programa) !== -1 || props.programa === programa; }));
         }
+        function renderTypeSummary(features) {
+            var counts = {}; features.forEach(function(feature) { var tipo = (feature.properties || {}).tipo || 'Sin categor\u00eda'; counts[tipo] = (counts[tipo] || 0) + 1; });
+            var maxCount = Math.max.apply(null, Object.keys(counts).map(function(tipo) { return counts[tipo]; }).concat([1]));
+            var rows = Object.keys(counts).sort(function(a, b) { return counts[b] - counts[a] || a.localeCompare(b, 'es', {numeric: true}); }).map(function(tipo) {
+                var pct = Math.max(4, Math.round((counts[tipo] / maxCount) * 100));
+                return '<tr><td>' + tipo + '</td><td class="bar-cell"><div class="summary-bar-track"><div class="summary-bar" style="width:' + pct + '%"></div></div></td><td>' + counts[tipo] + '</td></tr>';
+            });
+            document.getElementById('typeSummaryBody').innerHTML = rows.length ? rows.join('') : '<tr><td colspan="3">Sin resultados</td></tr>';
+        }
+        function updateSectionCounts() {
+            var tipoCount = selectedValues('filterTipo').length;
+            var comunaCount = selectedValues('filterComuna').length;
+            var programaCount = selectedValues('filterPrograma').length;
+            document.getElementById('filterTipoCount').textContent = tipoCount ? tipoCount + ' seleccionadas' : 'Todas';
+            document.getElementById('filterComunaCount').textContent = comunaCount ? comunaCount + ' seleccionadas' : 'Todas';
+            document.getElementById('filterProgramaCount').textContent = programaCount ? programaCount + ' seleccionados' : 'Todos';
+        }
+        function updateFilterBadge() { var totalSelected = selectedValues('filterTipo').length + selectedValues('filterComuna').length + selectedValues('filterPrograma').length; document.getElementById('filterBadge').textContent = totalSelected ? totalSelected + ' filtros activos' : 'Sin filtros activos'; updateSectionCounts(); }
         function applyFilters() {
-            var filtered = allOscFeatures.filter(featureMatches);
-            layer_osc_direcciones_geocodificadas_qgis_1.clearLayers();
-            layer_osc_direcciones_geocodificadas_qgis_1.addData(filtered);
-            document.getElementById('filterCount').textContent = filtered.length + ' de ' + allOscFeatures.length + ' puntos visibles';
-            if (filtered.length) {
-                var bounds = layer_osc_direcciones_geocodificadas_qgis_1.getBounds();
-                if (bounds.isValid()) {
-                    map.fitBounds(bounds, {padding: [20, 20], maxZoom: 15});
-                }
-            }
+            var filtered = allOscFeatures.filter(featureMatches); layer_osc_direcciones_geocodificadas_qgis_1.clearLayers(); layer_osc_direcciones_geocodificadas_qgis_1.addData(filtered);
+            document.getElementById('filterCount').textContent = filtered.length + ' de ' + allOscFeatures.length + ' puntos visibles'; updateFilterBadge(); renderTypeSummary(filtered);
+            if (filtered.length) { var bounds = layer_osc_direcciones_geocodificadas_qgis_1.getBounds(); if (bounds.isValid()) { map.fitBounds(bounds, {padding: [20, 20], maxZoom: 15}); } }
         }
-        fillSelect('filterTipo', sortValues(new Set(allOscFeatures.map(function(feature) {
-            return (feature.properties || {}).tipo;
-        }))));
-        fillSelect('filterComuna', sortValues(new Set(allOscFeatures.map(function(feature) {
-            return ((feature.properties || {}).comunas || []);
-        }).flat())));
-        var programSet = new Set();
-        allOscFeatures.forEach(function(feature) {
-            var programas = (feature.properties || {}).programas || [];
-            programas.forEach(function(programa) { programSet.add(programa); });
-        });
-        fillSelect('filterPrograma', sortValues(programSet));
-        document.getElementById('filterTipo').addEventListener('change', applyFilters);
-        document.getElementById('filterComuna').addEventListener('change', applyFilters);
-        document.getElementById('filterPrograma').addEventListener('change', applyFilters);
-        document.getElementById('resetFilters').addEventListener('click', function() {
-            document.getElementById('filterTipo').value = '';
-            document.getElementById('filterComuna').value = '';
-            document.getElementById('filterPrograma').value = '';
-            applyFilters();
-        });
-        L.DomEvent.disableClickPropagation(document.getElementById('filterPanel'));
+        renderCheckboxes('filterTipo', sortValues(new Set(allOscFeatures.map(function(feature) { return (feature.properties || {}).tipo; }))));
+        renderCheckboxes('filterComuna', sortValues(new Set(allOscFeatures.map(function(feature) { return ((feature.properties || {}).comunas || []); }).flat())), function(value) { return 'Comuna ' + value; });
+        var programSet = new Set(); allOscFeatures.forEach(function(feature) { var programas = (feature.properties || {}).programas || []; programas.forEach(function(programa) { programSet.add(programa); }); });
+        renderCheckboxes('filterPrograma', sortValues(programSet));
+        document.getElementById('applyFiltersButton').addEventListener('click', applyFilters);
+        Array.from(document.querySelectorAll('#filterPanel input[type="checkbox"]')).forEach(function(input) { input.addEventListener('change', updateSectionCounts); });
+        document.getElementById('resetFilters').addEventListener('click', function() { Array.from(document.querySelectorAll('#filterPanel input[type="checkbox"]')).forEach(function(input) { input.checked = false; }); applyFilters(); });
+        L.DomEvent.disableClickPropagation(document.getElementById('filterPanel')); L.DomEvent.disableScrollPropagation(document.getElementById('filterPanel'));
+        L.DomEvent.disableClickPropagation(document.getElementById('summaryPanel')); L.DomEvent.disableScrollPropagation(document.getElementById('summaryPanel'));
         applyFilters();
         setBounds();
         </script>
