@@ -273,6 +273,110 @@
             color: #555;
             font-size: 12px;
         }
+        .osc-popup {
+            min-width: 250px;
+            max-width: 330px;
+            color: #192844;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .osc-popup-title {
+            margin: 0 0 6px;
+            color: #052b76;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .osc-popup-subtitle {
+            margin: 0 0 10px;
+            color: #50617f;
+            font-size: 12px;
+            line-height: 1.35;
+        }
+        .osc-popup-badge {
+            display: inline-block;
+            margin-bottom: 9px;
+            padding: 4px 10px;
+            border: 1px solid #c8dcff;
+            border-radius: 999px;
+            background: #eef5ff;
+            color: #17438b;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .osc-popup-row {
+            display: grid;
+            grid-template-columns: 88px minmax(0, 1fr);
+            gap: 8px;
+            padding: 6px 0;
+            border-top: 1px solid #e8edf6;
+            font-size: 12px;
+            line-height: 1.3;
+        }
+        .osc-popup-row strong {
+            color: #25314d;
+            font-weight: 700;
+        }
+        .osc-popup-row span {
+            color: #192844;
+        }
+        @media (max-width: 700px) {
+            .filter-panel {
+                top: auto;
+                right: 10px;
+                bottom: 22px;
+                left: 10px;
+                width: auto;
+            }
+        }
+        .filter-panel {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 1000;
+            width: min(360px, calc(100% - 28px));
+            padding: 14px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .filter-panel h1 {
+            margin: 0 0 10px;
+            font-size: 17px;
+            line-height: 1.2;
+        }
+        .filter-panel label {
+            display: block;
+            margin-top: 9px;
+            margin-bottom: 4px;
+            color: #444;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .filter-panel select,
+        .filter-panel button {
+            width: 100%;
+            min-height: 34px;
+            border-radius: 6px;
+            border: 1px solid #b8b8b8;
+            background: #fff;
+            color: #222;
+            font-size: 13px;
+        }
+        .filter-panel button {
+            margin-top: 10px;
+            background: #0b63b6;
+            color: #fff;
+            border-color: #0b63b6;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .filter-count {
+            margin-top: 10px;
+            color: #555;
+            font-size: 12px;
+        }
         @media (max-width: 700px) {
             .filter-panel {
                 top: auto;
@@ -701,9 +805,6 @@
             document.getElementById('filterComuna').value = '';
             document.getElementById('filterPrograma').value = '';
             applyFilters();
-        });
-        L.DomEvent.disableClickPropagation(document.getElementById('filterPanel'));
-        applyFilters();
         });
         L.DomEvent.disableClickPropagation(document.getElementById('filterPanel'));
         applyFilters();
